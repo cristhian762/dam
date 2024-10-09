@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Primeiroapp</string>
+    <string name="str_btn_send">Enviar</string>
+    <string name="str_hint_et_text">Digite algo aqui</string>
+</resources>

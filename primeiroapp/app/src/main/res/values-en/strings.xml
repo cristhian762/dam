@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Primeiroapp</string>
+    <string name="str_btn_send">Send</string>
+    <string name="str_hint_et_text">Type here</string>
+</resources>
