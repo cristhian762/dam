@@ -23,12 +23,16 @@ public class NextActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Captura a intenção que carregou essa página
         Intent i = getIntent();
 
+        // Busca dentro do Intent um dado com a chave text
         String text = i.getStringExtra("text");
 
+        // Busca o recurso com id tvText 
         TextView tvText = findViewById(R.id.tvText);
 
+        // Muda o texto presente em tvText para o texto contido na variável text
         tvText.setText(text);
     }
 }
