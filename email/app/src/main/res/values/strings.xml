@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">email</string>
+    <string name="et_text_email">E-Mail</string>
+    <string name="et_text_assunto">Assunto</string>
+    <string name="et_text_texto">Texto</string>
+    <string name="btn_enviar">Enviar</string>
+</resources>
