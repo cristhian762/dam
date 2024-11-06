@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mattiuzzi.fontana.cristhian.lista.R;
 import com.mattiuzzi.fontana.cristhian.lista.adapter.MyAdapter;
+import com.mattiuzzi.fontana.cristhian.lista.model.MainActivityViewModel;
 import com.mattiuzzi.fontana.cristhian.lista.model.MyItem;
 import com.mattiuzzi.fontana.cristhian.lista.util.Util;
 
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(i, NEW_ITEM_REQUEST);
             }
         });
+
+        MainActivityViewModel vm = new ViewModelProvider( this ).get(MainActivityViewModel.class );
+        List<MyItem> itens = vm.getItens();
 
         RecyclerView rvItens = findViewById(R.id.rvItens);
 
@@ -92,9 +97,12 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                itens.add(myItem);
+                // Salva lista em outro contexto
+                MainActivityViewModel vm = new ViewModelProvider( this ).get(MainActivityViewModel.class );
+                List<MyItem> itens = vm.getItens();
 
-                myAdapter.notifyItemInserted(itens.size() - 1);
+                itens.add(myItem);
+                myAdapter.notifyItemInserted(itens.size()-1);
             }
         }
     }
