@@ -32,7 +32,9 @@ android {
 }
 
 dependencies {
+    val lifecycle_version = "2.8.5"
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -40,4 +42,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 }

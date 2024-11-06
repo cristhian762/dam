@@ -2,6 +2,8 @@ package com.mattiuzzi.fontana.cristhian.lista.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,8 +20,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mattiuzzi.fontana.cristhian.lista.R;
 import com.mattiuzzi.fontana.cristhian.lista.adapter.MyAdapter;
 import com.mattiuzzi.fontana.cristhian.lista.model.MyItem;
+import com.mattiuzzi.fontana.cristhian.lista.util.Util;
 
-import java.io.Serializable;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,16 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Identificador da tela de retorno
     static int NEW_ITEM_REQUEST = 1;
-    List<MyItem> itens = null;
+    List<MyItem> itens = new ArrayList<>();;
     MyAdapter myAdapter;
-
-    // onSaveInstanceState metodo chamado toda vez que o sistema precisa salvar o estado
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putParcelableArrayList("item_list", new ArrayList<>(itens));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,14 +43,6 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        // Restaurar o estado
-        if (savedInstanceState != null) {
-            // Recupera a lista de itens do estado salvo
-            itens = savedInstanceState.getParcelableArrayList("item_list");
-        } else {
-            itens = new ArrayList<>();
-        }
 
         FloatingActionButton fabAddItem = findViewById(R.id.fabAddNewItem);
         fabAddItem.setOnClickListener(new View.OnClickListener() {
@@ -90,11 +77,20 @@ public class MainActivity extends AppCompatActivity {
 
             // Verifica o status do resultado
             if(resultCode == Activity.RESULT_OK) {
-                MyItem myItem = new MyItem(
-                        data.getData(),
-                        data.getStringExtra("title"),
-                        data.getStringExtra("description")
-                );
+                MyItem myItem = new MyItem();
+
+                myItem.title = data.getStringExtra("title");
+                myItem.description = data.getStringExtra("description");
+
+                Uri selectedPhotoURI = data.getData();
+
+                try {
+                    Bitmap photo = Util.getBitmap( MainActivity.this, selectedPhotoURI, 100, 100 );
+
+                    myItem.photo = photo;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
                 itens.add(myItem);
 

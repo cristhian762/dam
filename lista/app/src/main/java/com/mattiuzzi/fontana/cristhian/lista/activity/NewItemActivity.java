@@ -19,24 +19,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.mattiuzzi.fontana.cristhian.lista.R;
-import com.mattiuzzi.fontana.cristhian.lista.util.FileHelper;
-
-import java.io.File;
 
 public class NewItemActivity extends AppCompatActivity {
 
     static int PHOTO_PICKER_REQUEST = 1;
     Uri photoSelected = null;
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // Salvar o URI ou o caminho da imagem
-        if (photoSelected != null) {
-            outState.putString("imageUri", photoSelected.toString());
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,14 +114,8 @@ public class NewItemActivity extends AppCompatActivity {
 
         if (requestCode == PHOTO_PICKER_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                // Salva o arquivo no no armazenamento interno
-                String filePath = FileHelper.saveFileFromUri(this, data);
-
-                // Cria uma instância do tipo File a partir do caminho
-                File file = new File(filePath);
-
                 // Cria uma Uri a partir do arquivo
-                photoSelected = Uri.fromFile(file);
+                photoSelected = data.getData();
 
                 ImageView imvfotoPreview = findViewById(R.id.imvPhotoPreview);
 
