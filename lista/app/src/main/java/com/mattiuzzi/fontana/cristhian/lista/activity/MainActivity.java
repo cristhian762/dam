@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         rvItens.addItemDecoration(dividerItemDecoration);
     }
 
+    // Captura a resposta da activity executada
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                // Salva lista em outro contexto
+                // Salva imagem em ViewModel
                 MainActivityViewModel vm = new ViewModelProvider( this ).get(MainActivityViewModel.class );
                 List<MyItem> itens = vm.getItens();
 
